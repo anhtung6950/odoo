@@ -1,0 +1,22 @@
+version: '3'
+services:
+  odoo:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8069:8069
+    depends_on:
+      - postgres
+    volumes:
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - .:/mnt/extra-addons
+  postgres:
+    image: postgres:13
+    env_file: .env
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+
+volumes:
+  data:
+  db:
